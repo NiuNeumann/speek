@@ -3,6 +3,7 @@
 # To-Do:	Change to work only with one shelve file in which the dictionaries are being stored in one python dict
 # To-Do:	Further investige https://doc.qt.io/qtforpython/overviews/model-view-programming.html#model-view-programming
 # 			to maybe use QAbstractItemModel, QAbstractListModel or QAbstractTableModel with QTreeView to visualize
+#			Maybe with MongoDB? Overkill?
 
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QMenuBar, QAction, QWidget, QGroupBox,
