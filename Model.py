@@ -1,26 +1,32 @@
-from PyQt5.Widgets import QTableView, QItemDelegate
-from PyQt5.Core import QAbstractTableModel, Qt, QModelIndex
+from PyQt5.QtWidgets import QTableView, QItemDelegate
+from PyQt5.QtCore import QAbstractTableModel, Qt, QModelIndex
 import shelve
 
 class CustomTableModel(QAbstractTableModel):
 	def __init__(self, data):
 		QAbstractTableModel.__init__(self)
 		self.dict_data = data
-		self.columns = list(self.dict_data[0].keys())	# Keys from first row, might not work since different dicts
+		self.columns = list(self.dict_data.keys())	# Keys from first row, might not work since different dicts
+#		klist = self.dict_data.keys()
+#		subklist = []
+#		for keys in klist:
+#			subklist.append(list(self.dict_data[keys].values))
+#			eventuell schauen: wenn key kein weiteres dict enthält, dann zur klist hinzufügen, ansonsten das dict aus
+#			dem key öffnen und dann für alle keys in dem dict erneut checken und ggnfalls hinzufügen oder weiter machen 
 
 	def flags(self, index):
-		if index.column() > 0:
-			return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable
+		# if index.column() > 0:
+		return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable
 		
 	def rowCount(self, *args, **kwargs):
 		return len(self.dict_data)
 
-	def columnCount(self. *args, **kwargs):
+	def columnCount(self, *args, **kwargs):
 		return len(self.columns)
 
-	def headerData(self, section, orientation, role=Qt.DisplayRole):
-		if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-			return self.columns[section].title()
+#	def headerData(self, section, orientation, role=Qt.DisplayRole):
+#		if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+#			return self.columns[section].title()
 
 	def data(self, index, role):
 		row = self.dict_data[index.row()]

@@ -4,14 +4,16 @@
 # To-Do:	Further investige https://doc.qt.io/qtforpython/overviews/model-view-programming.html#model-view-programming
 # 			to maybe use QAbstractItemModel, QAbstractListModel or QAbstractTableModel with QTreeView to visualize
 #			Maybe with MongoDB? Overkill?
+# To-Do:	In Model.py die self.columns in der init fertig machen, columns einer shelve db
 
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import (QMainWindow, QApplication, QMenuBar, QAction, QWidget, QGroupBox,
 							QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QComboBox, QLineEdit,
 							QStackedWidget)
 import sys
-from CreateDict import CreateDict
 from Landing import Landing
+from CreateDict import CreateDict
+from OpenDict import OpenDict
 
 class MainWindow(QMainWindow):
 	def __init__(self):
@@ -23,8 +25,10 @@ class MainWindow(QMainWindow):
 		self.setCentralWidget(self.central_widget)
 		self.landing = Landing(self)
 		self.createDict = CreateDict(self)
+		self.openDict = OpenDict(self)
 		self.central_widget.addWidget(self.landing)
 		self.central_widget.addWidget(self.createDict)
+		self.central_widget.addWidget(self.openDict)
 		self.central_widget.setCurrentWidget(self.landing)
 
 		self.menu = self.menuBar()
@@ -36,6 +40,7 @@ class MainWindow(QMainWindow):
 		new_dict.triggered.connect(lambda: self.central_widget.setCurrentWidget(self.createDict))
 		self.add_menu.addAction(new_dict)
 		open_dict = QAction("Open existing Dictionary", self)
+		open_dict.triggered.connect(lambda: self.central_widget.setCurrentWidget(self.openDict))
 		self.add_menu.addAction(open_dict)
 		exit_action = QAction("Exit", self)
 		exit_action.setShortcut("Ctrl+Q")
